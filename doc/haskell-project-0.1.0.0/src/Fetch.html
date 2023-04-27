@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+Module      : Fetch
+Description : This module includes all the functions necessary to fetch data from the web
+-}</span><span>
+</span><span id="line-5"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Fetch</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-6"></span><span>    </span><span class="annot"><span class="hs-comment">-- * Functions</span></span><span>
+</span><span id="line-7"></span><span>    </span><span class="annot"><a href="Fetch.html#download"><span class="hs-identifier">download</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.ByteString.Lazy.Char8</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">L8</span></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Simple</span></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Exception</span></span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-comment">-- | The 'URL' type defines whats acceptable input for the 'download' function in a more readable way</span><span>
+</span><span id="line-15"></span><span class="hs-keyword">type</span><span> </span><span id="URL"><span class="annot"><a href="Fetch.html#URL"><span class="hs-identifier hs-var">URL</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span class="hs-comment">-- | The 'download' function takes a URL of a page, and fetches and returns the json data present in that page. It checks whether the request gets a successful response.</span><span>
+</span><span id="line-18"></span><span class="annot"><a href="Fetch.html#download"><span class="hs-identifier hs-type">download</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Fetch.html#URL"><span class="hs-identifier hs-type">URL</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">L8.ByteString</span></span><span>
+</span><span id="line-19"></span><span id="download"><span class="annot"><span class="annottext">download :: String -&gt; IO ByteString
+</span><a href="Fetch.html#download"><span class="hs-identifier hs-var hs-var">download</span></a></span></span><span> </span><span id="local-6989586621679099464"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099464"><span class="hs-identifier hs-var">url</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-20"></span><span>    </span><span id="local-6989586621679099463"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679099463"><span class="hs-identifier hs-var">request</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">forall (m :: * -&gt; *). MonadThrow m =&gt; String -&gt; m Request
+</span><span class="hs-identifier hs-var">parseRequest</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099464"><span class="hs-identifier hs-var">url</span></a></span><span>
+</span><span id="line-21"></span><span>    </span><span id="local-6989586621679099461"><span class="annot"><span class="annottext">Either SomeException (Response ByteString)
+</span><a href="#local-6989586621679099461"><span class="hs-identifier hs-var">res</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">forall e a. Exception e =&gt; IO a -&gt; IO (Either e a)
+</span><span class="hs-identifier hs-var">try</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">forall (m :: * -&gt; *).
+MonadIO m =&gt;
+Request -&gt; m (Response ByteString)
+</span><span class="hs-identifier hs-var">httpLBS</span></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679099463"><span class="hs-identifier hs-var">request</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SomeException</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Response</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">L8.ByteString</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Either SomeException (Response ByteString)
+</span><a href="#local-6989586621679099461"><span class="hs-identifier hs-var">res</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-23"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679099458"><span class="annot"><span class="annottext">SomeException
+</span><a href="#local-6989586621679099458"><span class="hs-identifier hs-var">ex</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-24"></span><span>            </span><span class="annot"><span class="annottext">forall a. Show a =&gt; a -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Error: something went wrong. Please check your internet connection or the link, and try again.&quot;</span></span><span>
+</span><span id="line-25"></span><span>            </span><span class="annot"><span class="annottext">forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-identifier hs-var">L8.empty</span></span><span>
+</span><span id="line-26"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679099456"><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621679099456"><span class="hs-identifier hs-var">response</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-27"></span><span>            </span><span class="annot"><span class="annottext">forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">forall a. Response a -&gt; a
+</span><span class="hs-identifier hs-var">getResponseBody</span></span><span> </span><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621679099456"><span class="hs-identifier hs-var">response</span></a></span></pre></body></html>

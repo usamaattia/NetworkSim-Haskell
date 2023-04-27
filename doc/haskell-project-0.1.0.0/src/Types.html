@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE DeriveGeneric #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">{-|
+Module      : Types
+Description : This module includes all the type definitions required throughout the application
+-}</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Types</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-8"></span><span>    </span><span class="annot"><span class="hs-comment">-- * Types</span></span><span>
+</span><span id="line-9"></span><span>    </span><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier">Actor</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-10"></span><span>    </span><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier">Cast</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-11"></span><span>    </span><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier">Genre</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-12"></span><span>    </span><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier">MovieGenre</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-13"></span><span>    </span><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier">Movie</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-14"></span><span>    </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier">Record</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>    </span><span class="annot"><a href="Types.html#Records"><span class="hs-identifier">Records</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">GHC.Generics</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.FromRow</span></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.ToRow</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.FromField</span></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Aeson</span></span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span class="hs-comment">-- | This is the data structure that will represent an Actor entry</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">data</span><span> </span><span id="Actor"><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier hs-var">Actor</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Actor"><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier hs-var">Actor</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-26"></span><span>    </span><span class="hs-comment">-- | The 'actor_id' method returns the id by which an actor entry is indexed</span><span>
+</span><span id="line-27"></span><span>    </span><span id="actor_id_"><span class="annot"><span class="annottext">Actor -&gt; Int
+</span><a href="Types.html#actor_id_"><span class="hs-identifier hs-var hs-var">actor_id_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-28"></span><span>    </span><span class="hs-comment">-- | The 'actor_first_name_' method returns the first name of an actor entry</span><span>
+</span><span id="line-29"></span><span>    </span><span id="actor_first_name_"><span class="annot"><span class="annottext">Actor -&gt; String
+</span><a href="Types.html#actor_first_name_"><span class="hs-identifier hs-var hs-var">actor_first_name_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-30"></span><span>    </span><span class="hs-comment">-- | The 'actor_last_name_' method returns the last name of an actor entry</span><span>
+</span><span id="line-31"></span><span>    </span><span id="actor_last_name_"><span class="annot"><span class="annottext">Actor -&gt; String
+</span><a href="Types.html#actor_last_name_"><span class="hs-identifier hs-var hs-var">actor_last_name_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-32"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099849"><span id="local-6989586621679099851"><span id="local-6989586621679099861"><span class="annot"><span class="annottext">Int -&gt; Actor -&gt; ShowS
+[Actor] -&gt; ShowS
+Actor -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Actor] -&gt; ShowS
+$cshowList :: [Actor] -&gt; ShowS
+show :: Actor -&gt; String
+$cshow :: Actor -&gt; String
+showsPrec :: Int -&gt; Actor -&gt; ShowS
+$cshowsPrec :: Int -&gt; Actor -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-comment">-- | A Cast entry associates an actor with a movie</span><span>
+</span><span id="line-35"></span><span class="hs-keyword">data</span><span> </span><span id="Cast"><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier hs-var">Cast</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Cast"><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier hs-var">Cast</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-36"></span><span>    </span><span class="hs-comment">-- | The 'fk_movie_cast' method returns the id of the movie in this relation</span><span>
+</span><span id="line-37"></span><span>    </span><span id="fk_movie_cast"><span class="annot"><span class="annottext">Cast -&gt; Int
+</span><a href="Types.html#fk_movie_cast"><span class="hs-identifier hs-var hs-var">fk_movie_cast</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-38"></span><span>    </span><span class="hs-comment">-- | The 'fk_actor_cast' method returns the id of the actor in this relation</span><span>
+</span><span id="line-39"></span><span>    </span><span id="fk_actor_cast"><span class="annot"><span class="annottext">Cast -&gt; Int
+</span><a href="Types.html#fk_actor_cast"><span class="hs-identifier hs-var hs-var">fk_actor_cast</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-40"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099835"><span id="local-6989586621679099837"><span id="local-6989586621679099842"><span class="annot"><span class="annottext">Int -&gt; Cast -&gt; ShowS
+[Cast] -&gt; ShowS
+Cast -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Cast] -&gt; ShowS
+$cshowList :: [Cast] -&gt; ShowS
+show :: Cast -&gt; String
+$cshow :: Cast -&gt; String
+showsPrec :: Int -&gt; Cast -&gt; ShowS
+$cshowsPrec :: Int -&gt; Cast -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-41"></span><span>
+</span><span id="line-42"></span><span class="hs-comment">-- | This is the data structure that will represent a Genre entry</span><span>
+</span><span id="line-43"></span><span class="hs-keyword">data</span><span> </span><span id="Genre"><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier hs-var">Genre</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Genre"><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier hs-var">Genre</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-44"></span><span>    </span><span class="hs-comment">-- | The 'genre_id_' method returns the id by which a genre entry is indexed</span><span>
+</span><span id="line-45"></span><span>    </span><span id="genre_id_"><span class="annot"><span class="annottext">Genre -&gt; Int
+</span><a href="Types.html#genre_id_"><span class="hs-identifier hs-var hs-var">genre_id_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-46"></span><span>    </span><span class="hs-comment">-- | The 'genre_first_name_' method returns the first name of a genre entry</span><span>
+</span><span id="line-47"></span><span>    </span><span id="genre_first_name_"><span class="annot"><span class="annottext">Genre -&gt; String
+</span><a href="Types.html#genre_first_name_"><span class="hs-identifier hs-var hs-var">genre_first_name_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-48"></span><span>    </span><span class="hs-comment">-- | The 'genre_second_name_' method returns the second name of a genre entry</span><span>
+</span><span id="line-49"></span><span>    </span><span id="genre_second_name_"><span class="annot"><span class="annottext">Genre -&gt; String
+</span><a href="Types.html#genre_second_name_"><span class="hs-identifier hs-var hs-var">genre_second_name_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-50"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099820"><span id="local-6989586621679099822"><span id="local-6989586621679099829"><span class="annot"><span class="annottext">Int -&gt; Genre -&gt; ShowS
+[Genre] -&gt; ShowS
+Genre -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Genre] -&gt; ShowS
+$cshowList :: [Genre] -&gt; ShowS
+show :: Genre -&gt; String
+$cshow :: Genre -&gt; String
+showsPrec :: Int -&gt; Genre -&gt; ShowS
+$cshowsPrec :: Int -&gt; Genre -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-51"></span><span>
+</span><span id="line-52"></span><span class="hs-comment">-- | A MovieGenre entry associates a genre with a movie</span><span>
+</span><span id="line-53"></span><span class="hs-keyword">data</span><span> </span><span id="MovieGenre"><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier hs-var">MovieGenre</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="MovieGenre"><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier hs-var">MovieGenre</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-54"></span><span>    </span><span class="hs-comment">-- | The 'fk_movie_genre' method returns the id of the movie in this MovieGenre relation</span><span>
+</span><span id="line-55"></span><span>    </span><span id="fk_movie_genre"><span class="annot"><span class="annottext">MovieGenre -&gt; Int
+</span><a href="Types.html#fk_movie_genre"><span class="hs-identifier hs-var hs-var">fk_movie_genre</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-56"></span><span>    </span><span class="hs-comment">-- | The 'fk_genre_genre' method returns the id of the genre in this MovieGenre relation</span><span>
+</span><span id="line-57"></span><span>    </span><span id="fk_genre_genre"><span class="annot"><span class="annottext">MovieGenre -&gt; Int
+</span><a href="Types.html#fk_genre_genre"><span class="hs-identifier hs-var hs-var">fk_genre_genre</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-58"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099808"><span id="local-6989586621679099810"><span id="local-6989586621679099815"><span class="annot"><span class="annottext">Int -&gt; MovieGenre -&gt; ShowS
+[MovieGenre] -&gt; ShowS
+MovieGenre -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [MovieGenre] -&gt; ShowS
+$cshowList :: [MovieGenre] -&gt; ShowS
+show :: MovieGenre -&gt; String
+$cshow :: MovieGenre -&gt; String
+showsPrec :: Int -&gt; MovieGenre -&gt; ShowS
+$cshowsPrec :: Int -&gt; MovieGenre -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span class="hs-comment">-- | This is the data structure that will represent a Movie entry</span><span>
+</span><span id="line-61"></span><span class="hs-keyword">data</span><span> </span><span id="Movie"><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier hs-var">Movie</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Movie"><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier hs-var">Movie</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-62"></span><span>    </span><span class="hs-comment">-- | The 'movie_id_' method returns the id by which a movie entry is indexed</span><span>
+</span><span id="line-63"></span><span>    </span><span id="movie_id_"><span class="annot"><span class="annottext">Movie -&gt; Int
+</span><a href="Types.html#movie_id_"><span class="hs-identifier hs-var hs-var">movie_id_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-64"></span><span>    </span><span class="hs-comment">-- | The 'title_' method returns the title of a movie entry</span><span>
+</span><span id="line-65"></span><span>    </span><span id="title_"><span class="annot"><span class="annottext">Movie -&gt; String
+</span><a href="Types.html#title_"><span class="hs-identifier hs-var hs-var">title_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-66"></span><span>    </span><span class="hs-comment">-- | The 'year_' method returns the year of a movie entry</span><span>
+</span><span id="line-67"></span><span>    </span><span id="year_"><span class="annot"><span class="annottext">Movie -&gt; Int
+</span><a href="Types.html#year_"><span class="hs-identifier hs-var hs-var">year_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-68"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099793"><span id="local-6989586621679099795"><span id="local-6989586621679099802"><span class="annot"><span class="annottext">Int -&gt; Movie -&gt; ShowS
+[Movie] -&gt; ShowS
+Movie -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Movie] -&gt; ShowS
+$cshowList :: [Movie] -&gt; ShowS
+show :: Movie -&gt; String
+$cshow :: Movie -&gt; String
+showsPrec :: Int -&gt; Movie -&gt; ShowS
+$cshowsPrec :: Int -&gt; Movie -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-69"></span><span>
+</span><span id="line-70"></span><span class="hs-comment">-- | This is the data structure that will represent a raw Record object</span><span>
+</span><span id="line-71"></span><span id="local-6989586621679099791"><span id="local-6989586621679099792"></span></span><span class="hs-keyword">data</span><span> </span><span id="Record"><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Record"><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-72"></span><span>    </span><span class="hs-comment">-- | The 'title' method returns the title present in a given json record</span><span>
+</span><span id="line-73"></span><span>    </span><span id="title"><span class="annot"><span class="annottext">Record -&gt; String
+</span><a href="Types.html#title"><span class="hs-identifier hs-var hs-var">title</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-74"></span><span>    </span><span class="hs-comment">-- | The 'year' method returns the year present in a given json record</span><span>
+</span><span id="line-75"></span><span>    </span><span id="year"><span class="annot"><span class="annottext">Record -&gt; Int
+</span><a href="Types.html#year"><span class="hs-identifier hs-var hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-76"></span><span>    </span><span class="hs-comment">-- | The 'cast' method returns the list of actors present in a given json record</span><span>
+</span><span id="line-77"></span><span>    </span><span id="cast"><span class="annot"><span class="annottext">Record -&gt; [String]
+</span><a href="Types.html#cast"><span class="hs-identifier hs-var hs-var">cast</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span>
+</span><span id="line-78"></span><span>    </span><span class="hs-comment">-- | The 'genres' method returns the list of genres present in a given json record</span><span>
+</span><span id="line-79"></span><span>    </span><span id="genres"><span class="annot"><span class="annottext">Record -&gt; [String]
+</span><a href="Types.html#genres"><span class="hs-identifier hs-var hs-var">genres</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span>
+</span><span id="line-80"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099774"><span id="local-6989586621679099776"><span id="local-6989586621679099784"><span class="annot"><span class="annottext">Int -&gt; Record -&gt; ShowS
+[Record] -&gt; ShowS
+Record -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Record] -&gt; ShowS
+$cshowList :: [Record] -&gt; ShowS
+show :: Record -&gt; String
+$cshow :: Record -&gt; String
+showsPrec :: Int -&gt; Record -&gt; ShowS
+$cshowsPrec :: Int -&gt; Record -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">forall x. Rep Record x -&gt; Record
+forall x. Record -&gt; Rep Record x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cto :: forall x. Rep Record x -&gt; Record
+$cfrom :: forall x. Record -&gt; Rep Record x
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
+</span><span id="line-81"></span><span>
+</span><span id="line-82"></span><span class="hs-comment">-- | 'Records' defines an alias for an array of Record's</span><span>
+</span><span id="line-83"></span><span id="local-6989586621679099768"><span id="local-6989586621679099769"></span></span><span class="hs-keyword">newtype</span><span> </span><span id="Records"><span class="annot"><a href="Types.html#Records"><span class="hs-identifier hs-var">Records</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Records"><span class="annot"><a href="Types.html#Records"><span class="hs-identifier hs-var">Records</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-84"></span><span>    </span><span class="hs-comment">-- | The 'records' method returns the list of records</span><span>
+</span><span id="line-85"></span><span>    </span><span id="records"><span class="annot"><span class="annottext">Records -&gt; [Record]
+</span><a href="Types.html#records"><span class="hs-identifier hs-var hs-var">records</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-86"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679099757"><span id="local-6989586621679099759"><span id="local-6989586621679099764"><span class="annot"><span class="annottext">Int -&gt; Records -&gt; ShowS
+[Records] -&gt; ShowS
+Records -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Records] -&gt; ShowS
+$cshowList :: [Records] -&gt; ShowS
+show :: Records -&gt; String
+$cshow :: Records -&gt; String
+showsPrec :: Int -&gt; Records -&gt; ShowS
+$cshowsPrec :: Int -&gt; Records -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">forall x. Rep Records x -&gt; Records
+forall x. Records -&gt; Rep Records x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cto :: forall x. Rep Records x -&gt; Records
+$cfrom :: forall x. Records -&gt; Rep Records x
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span><span>
+</span><span id="line-88"></span><span>
+</span><span id="line-89"></span><span class="hs-comment">{-- Making above datatype instances of FromRow and ToRow type classes --}</span><span>
+</span><span id="line-90"></span><span class="hs-comment">-- | Defining Actor as an instance of FromRow</span><span>
+</span><span id="line-91"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier hs-type">Actor</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-92"></span><span>    </span><span id="local-6989586621679099741"><span class="annot"><span class="annottext">fromRow :: RowParser Actor
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; String -&gt; String -&gt; Actor
+</span><a href="Types.html#Actor"><span class="hs-identifier hs-var">Actor</span></a></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span>
+</span><span id="line-93"></span><span>
+</span><span id="line-94"></span><span class="hs-comment">-- | Defining Actor as an instance of ToRow</span><span>
+</span><span id="line-95"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier hs-type">Actor</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-96"></span><span>    </span><span id="local-6989586621679099727"><span class="annot"><span class="annottext">toRow :: Actor -&gt; [SQLData]
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#Actor"><span class="hs-identifier hs-type">Actor</span></a></span><span> </span><span id="local-6989586621679099725"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099725"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span id="local-6989586621679099724"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099724"><span class="hs-identifier hs-var">fname</span></a></span></span><span> </span><span id="local-6989586621679099723"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099723"><span class="hs-identifier hs-var">lname</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a. ToRow a =&gt; a -&gt; [SQLData]
+</span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099725"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099724"><span class="hs-identifier hs-var">fname</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099723"><span class="hs-identifier hs-var">lname</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-97"></span><span>
+</span><span id="line-98"></span><span class="hs-comment">-- | Defining Cast as an instance of FromRow</span><span>
+</span><span id="line-99"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier hs-type">Cast</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-100"></span><span>    </span><span id="local-6989586621679099716"><span class="annot"><span class="annottext">fromRow :: RowParser Cast
+</span><a href="#local-6989586621679099716"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Cast
+</span><a href="Types.html#Cast"><span class="hs-identifier hs-var">Cast</span></a></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span>
+</span><span id="line-101"></span><span>
+</span><span id="line-102"></span><span class="hs-comment">-- | Defining Cast as an instance of ToRow</span><span>
+</span><span id="line-103"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier hs-type">Cast</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-104"></span><span>    </span><span id="local-6989586621679099709"><span class="annot"><span class="annottext">toRow :: Cast -&gt; [SQLData]
+</span><a href="#local-6989586621679099709"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#Cast"><span class="hs-identifier hs-type">Cast</span></a></span><span> </span><span id="local-6989586621679099708"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099708"><span class="hs-identifier hs-var">mi</span></a></span></span><span> </span><span id="local-6989586621679099707"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099707"><span class="hs-identifier hs-var">ai</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a. ToRow a =&gt; a -&gt; [SQLData]
+</span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099708"><span class="hs-identifier hs-var">mi</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099707"><span class="hs-identifier hs-var">ai</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-105"></span><span>
+</span><span id="line-106"></span><span class="hs-comment">-- | Defining Genre as an instance of FromRow</span><span>
+</span><span id="line-107"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier hs-type">Genre</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-108"></span><span>    </span><span id="local-6989586621679099698"><span class="annot"><span class="annottext">fromRow :: RowParser Genre
+</span><a href="#local-6989586621679099698"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; String -&gt; String -&gt; Genre
+</span><a href="Types.html#Genre"><span class="hs-identifier hs-var">Genre</span></a></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span>
+</span><span id="line-109"></span><span>
+</span><span id="line-110"></span><span class="hs-comment">-- | Defining Genre as an instance of ToRow</span><span>
+</span><span id="line-111"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier hs-type">Genre</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-112"></span><span>    </span><span id="local-6989586621679099691"><span class="annot"><span class="annottext">toRow :: Genre -&gt; [SQLData]
+</span><a href="#local-6989586621679099691"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#Genre"><span class="hs-identifier hs-type">Genre</span></a></span><span> </span><span id="local-6989586621679099690"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099690"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span id="local-6989586621679099689"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099689"><span class="hs-identifier hs-var">fname</span></a></span></span><span> </span><span id="local-6989586621679099688"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099688"><span class="hs-identifier hs-var">lname</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a. ToRow a =&gt; a -&gt; [SQLData]
+</span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099690"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099689"><span class="hs-identifier hs-var">fname</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099688"><span class="hs-identifier hs-var">lname</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-113"></span><span>
+</span><span id="line-114"></span><span class="hs-comment">-- | Defining MovieGenre as an instance of FromRow</span><span>
+</span><span id="line-115"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier hs-type">MovieGenre</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-116"></span><span>    </span><span id="local-6989586621679099681"><span class="annot"><span class="annottext">fromRow :: RowParser MovieGenre
+</span><a href="#local-6989586621679099681"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; MovieGenre
+</span><a href="Types.html#MovieGenre"><span class="hs-identifier hs-var">MovieGenre</span></a></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span>
+</span><span id="line-117"></span><span>
+</span><span id="line-118"></span><span class="hs-comment">-- | Defining MovieGenre as an instance of ToRow</span><span>
+</span><span id="line-119"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier hs-type">MovieGenre</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-120"></span><span>    </span><span id="local-6989586621679099675"><span class="annot"><span class="annottext">toRow :: MovieGenre -&gt; [SQLData]
+</span><a href="#local-6989586621679099675"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#MovieGenre"><span class="hs-identifier hs-type">MovieGenre</span></a></span><span> </span><span id="local-6989586621679099674"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099674"><span class="hs-identifier hs-var">mi</span></a></span></span><span> </span><span id="local-6989586621679099673"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099673"><span class="hs-identifier hs-var">gi</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a. ToRow a =&gt; a -&gt; [SQLData]
+</span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099674"><span class="hs-identifier hs-var">mi</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099673"><span class="hs-identifier hs-var">gi</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-121"></span><span>
+</span><span id="line-122"></span><span class="hs-comment">-- | Defining Movie as an instance of FromRow</span><span>
+</span><span id="line-123"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier hs-type">Movie</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-124"></span><span>    </span><span id="local-6989586621679099664"><span class="annot"><span class="annottext">fromRow :: RowParser Movie
+</span><a href="#local-6989586621679099664"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; String -&gt; Int -&gt; Movie
+</span><a href="Types.html#Movie"><span class="hs-identifier hs-var">Movie</span></a></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">forall a. FromField a =&gt; RowParser a
+</span><span class="hs-identifier hs-var">field</span></span><span>
+</span><span id="line-125"></span><span>
+</span><span id="line-126"></span><span class="hs-comment">-- | Defining Movie as an instance of ToRow</span><span>
+</span><span id="line-127"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier hs-type">Movie</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-128"></span><span>    </span><span id="local-6989586621679099657"><span class="annot"><span class="annottext">toRow :: Movie -&gt; [SQLData]
+</span><a href="#local-6989586621679099657"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#Movie"><span class="hs-identifier hs-type">Movie</span></a></span><span> </span><span id="local-6989586621679099656"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099656"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span id="local-6989586621679099655"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099655"><span class="hs-identifier hs-var">tit</span></a></span></span><span> </span><span id="local-6989586621679099654"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099654"><span class="hs-identifier hs-var">year</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a. ToRow a =&gt; a -&gt; [SQLData]
+</span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099656"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099655"><span class="hs-identifier hs-var">tit</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679099654"><span class="hs-identifier hs-var">year</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-129"></span><span>
+</span><span id="line-130"></span><span class="hs-comment">{-|
+Making above datatype instances of FromJSON type class
+-}</span><span>
+</span><span id="line-133"></span><span class="hs-comment">-- |The 'renameFields' function is required to define the 'customOptions' function</span><span>
+</span><span id="line-134"></span><span class="annot"><a href="Types.html#renameFields"><span class="hs-identifier hs-type">renameFields</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-135"></span><span id="renameFields"><span class="annot"><span class="annottext">renameFields :: ShowS
+</span><a href="Types.html#renameFields"><span class="hs-identifier hs-var hs-var">renameFields</span></a></span></span><span> </span><span id="local-6989586621679099652"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099652"><span class="hs-identifier hs-var">other</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679099652"><span class="hs-identifier hs-var">other</span></a></span><span>
+</span><span id="line-136"></span><span>
+</span><span id="line-137"></span><span class="hs-comment">-- |The 'customOptions' function is required to define the 'parseJSON' function</span><span>
+</span><span id="line-138"></span><span class="annot"><a href="Types.html#customOptions"><span class="hs-identifier hs-type">customOptions</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Options</span></span><span>
+</span><span id="line-139"></span><span id="customOptions"><span class="annot"><span class="annottext">customOptions :: Options
+</span><a href="Types.html#customOptions"><span class="hs-identifier hs-var hs-var">customOptions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options
+</span><span class="hs-identifier hs-var">defaultOptions</span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-140"></span><span>    </span><span class="annot"><span class="annottext">fieldLabelModifier :: ShowS
+</span><span class="hs-identifier hs-var">fieldLabelModifier</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShowS
+</span><a href="Types.html#renameFields"><span class="hs-identifier hs-var">renameFields</span></a></span><span>
+</span><span id="line-141"></span><span class="hs-special">}</span><span>
+</span><span id="line-142"></span><span>
+</span><span id="line-143"></span><span class="hs-comment">-- | Defining Record as an instance of FromJSON</span><span>
+</span><span id="line-144"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679099646"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-145"></span><span>    </span><span id="local-6989586621679099564"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Record
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a.
+(Generic a, GFromJSON Zero (Rep a)) =&gt;
+Options -&gt; Value -&gt; Parser a
+</span><span class="hs-identifier hs-var">genericParseJSON</span></span><span> </span><span class="annot"><span class="annottext">Options
+</span><a href="Types.html#customOptions"><span class="hs-identifier hs-var">customOptions</span></a></span><span>
+</span><span id="line-146"></span><span>
+</span><span id="line-147"></span><span class="hs-comment">-- | Defining Records as an instance of FromJSON</span><span>
+</span><span id="line-148"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679099558"><span id="local-6989586621679099560"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Types.html#Records"><span class="hs-identifier hs-type">Records</span></a></span></span></span><span>
+</span><span id="line-149"></span></pre></body></html>
